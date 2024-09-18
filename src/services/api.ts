@@ -29,3 +29,26 @@ export const fetchRates = async ({
       }
     );
 };
+
+export const getConversionRate = async ({
+  baseCurrency,
+  targetCurrency,
+}: {
+  baseCurrency: Currency;
+  targetCurrency: Currency;
+}) => {
+  return fetch(
+    `/v6/${process.env.REACT_APP_CURRENCY_API}/pair/${baseCurrency}/${targetCurrency}`
+  )
+    .then((res) => res.json())
+    .then(
+      (result) => {
+        return {
+          rate: result.conversion_rate,
+        };
+      },
+      (error) => {
+        throw new Error(error);
+      }
+    );
+};

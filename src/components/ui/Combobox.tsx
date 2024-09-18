@@ -24,13 +24,15 @@ type ComboboxProps = ComboboxItem[];
 
 export function Combobox({
   items,
-  defaultValue,
+  selectedValue,
+  setSelectedValue,
 }: {
   items: ComboboxProps;
-  defaultValue: ComboboxItem;
+  selectedValue: string;
+  setSelectedValue: (value: string) => void;
 }) {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState(defaultValue.value);
+  //  const [value, setValue] = React.useState(selectedValue);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -41,8 +43,8 @@ export function Combobox({
           aria-expanded={open}
           className="w-[200px] justify-between"
         >
-          {value
-            ? items.find((item) => item.value === value)?.label
+          {selectedValue
+            ? items.find((item) => item.value === selectedValue)?.label
             : "Select currency..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -58,14 +60,16 @@ export function Combobox({
                   key={item.value}
                   value={item.value}
                   onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
+                    setSelectedValue(
+                      currentValue === selectedValue ? "" : currentValue
+                    );
                     setOpen(false);
                   }}
                 >
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      value === item.value ? "opacity-100" : "opacity-0"
+                      selectedValue === item.value ? "opacity-100" : "opacity-0"
                     )}
                   />
                   {item.label}

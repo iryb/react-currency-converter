@@ -7,7 +7,9 @@ export const fetchRates = async ({
   baseCurrency: Currency;
   currencies: Currency[];
 }) => {
-  return fetch(`/v6/4f4d9613275c27b11c5ca347/latest/${baseCurrency}`)
+  return fetch(
+    `/v6/${process.env.REACT_APP_CURRENCY_API}/latest/${baseCurrency}`
+  )
     .then((res) => res.json())
     .then(
       (result) => {

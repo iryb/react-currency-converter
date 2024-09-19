@@ -2,6 +2,7 @@
   "name": "react-currency-converter",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://iryb.github.io/react-currency-converter",
   "proxy": "https://v6.exchangerate-api.com",
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.1",

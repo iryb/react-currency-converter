@@ -2,6 +2,7 @@
   "name": "react-currency-converter",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://iryb.github.io/react-currency-converter",
   "proxy": "https://v6.exchangerate-api.com",
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.1",
@@ -16,6 +17,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
+    "gh-pages": "^6.1.1",
     "lucide-react": "^0.441.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -26,6 +28,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

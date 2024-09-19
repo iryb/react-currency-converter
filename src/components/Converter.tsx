@@ -25,6 +25,7 @@ export const Converter = () => {
   const [firstAmount, setFirstAmount] = useState<number>(1);
   const [secondAmount, setSecondAmount] = useState<number>();
   const [rate, setRate] = useState<number>();
+  const [error, setError] = useState(null);
 
   const handleValuesSwitch = () => {
     const firstValue = firstCurrency;
@@ -47,13 +48,16 @@ export const Converter = () => {
   };
 
   useEffect(() => {
+    setError(null);
     getConversionRate({
       baseCurrency: firstCurrency,
       targetCurrency: secondCurrency,
-    }).then((data) => {
-      setRate(data.rate);
-      setSecondAmount(roundNumber(firstAmount * data.rate));
-    });
+    })
+      .then((data) => {
+        setRate(data.rate);
+        setSecondAmount(roundNumber(firstAmount * data.rate));
+      })
+      .catch((e) => setError(e));
   }, [firstCurrency, secondCurrency]);
 
   return (
@@ -66,43 +70,49 @@ export const Converter = () => {
           </CardDescription>
         </CardHeader>
         <CardContent className="flex gap-4 justify-center items-center">
-          <div>
-            <div className="mb-4">
-              <Combobox
-                items={CurrenciesList}
-                selectedValue={firstCurrency}
-                setSelectedValue={(value: string) =>
-                  setFirstCurrency(value as Currency)
-                }
-              />
-            </div>
-            <Input
-              type="number"
-              min={0}
-              value={firstAmount}
-              onChange={handleFirstAmountChange}
-            />
-          </div>
-          <Button variant={"ghost"} onClick={handleValuesSwitch}>
-            <ArrowRightLeft />
-          </Button>
-          <div>
-            <div className="mb-4">
-              <Combobox
-                items={CurrenciesList}
-                selectedValue={secondCurrency}
-                setSelectedValue={(value: string) =>
-                  setSecondCurrency(value as Currency)
-                }
-              />
-            </div>
-            <Input
-              type="number"
-              min={0}
-              value={secondAmount}
-              onChange={handleSecondAmountChange}
-            />
-          </div>
+          {error ? (
+            <p>{error}</p>
+          ) : (
+            <>
+              <div>
+                <div className="mb-4">
+                  <Combobox
+                    items={CurrenciesList}
+                    selectedValue={firstCurrency}
+                    setSelectedValue={(value: string) =>
+                      setFirstCurrency(value as Currency)
+                    }
+                  />
+                </div>
+                <Input
+                  type="number"
+                  min={0}
+                  value={firstAmount}
+                  onChange={handleFirstAmountChange}
+                />
+              </div>
+              <Button variant={"ghost"} onClick={handleValuesSwitch}>
+                <ArrowRightLeft />
+              </Button>
+              <div>
+                <div className="mb-4">
+                  <Combobox
+                    items={CurrenciesList}
+                    selectedValue={secondCurrency}
+                    setSelectedValue={(value: string) =>
+                      setSecondCurrency(value as Currency)
+                    }
+                  />
+                </div>
+                <Input
+                  type="number"
+                  min={0}
+                  value={secondAmount}
+                  onChange={handleSecondAmountChange}
+                />
+              </div>
+            </>
+          )}
         </CardContent>
       </Card>
     </section>

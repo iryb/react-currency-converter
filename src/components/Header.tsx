@@ -1,16 +1,33 @@
 import { useEffect, useState } from "react";
 import { fetchRates } from "../services/api";
+import { HeaderBaseCurrency, HeaderCurrencies } from "../constants/constants";
+import { getExchangePrice } from "../lib/utils";
+
+type HeaderCurrency = {
+  name: string;
+  value: number;
+};
 
 export const Header = () => {
-  const [eur, setEur] = useState<number>();
-  const [usd, setUsd] = useState<number>();
-  const [error, setError] = useState();
+  const [error, setError] = useState(null);
+
+  const [currencies, setCurrencies] = useState<HeaderCurrency[] | null>(null);
 
   useEffect(() => {
-    fetchRates({ baseCurrency: "UAH", currencies: ["EUR", "USD"] })
+    setError(null);
+    fetchRates({
+      baseCurrency: HeaderBaseCurrency,
+      currencies: HeaderCurrencies,
+    })
       .then((data) => {
-        setUsd(+(1 / data.selectedRates.USD).toFixed(2));
-        setEur(+(1 / data.selectedRates.EUR).toFixed(2));
+        const transformedCurrencies: HeaderCurrency[] = Object.entries(
+          data.selectedRates
+        ).map(([name, value]) => ({
+          name,
+          value: getExchangePrice(value),
+        }));
+
+        setCurrencies(transformedCurrencies);
       })
       .catch((e) => setError(e.message));
   }, []);
@@ -23,18 +40,14 @@ export const Header = () => {
       </div>
       <div className="flex gap-4">
         {error}
-        {usd && (
-          <div>
-            <span className="font-semibold pr-2">USD</span>
-            <span>{usd}</span>
-          </div>
-        )}
-        {eur && (
-          <div>
-            <span className="font-semibold pr-2">EUR</span>
-            <span>{eur}</span>
-          </div>
-        )}
+        {currencies &&
+          currencies.length > 0 &&
+          currencies.map(({ name, value }) => (
+            <div key={name}>
+              <span className="font-semibold pr-2">{name}</span>
+              <span>{value}</span>
+            </div>
+          ))}
       </div>
     </header>
   );

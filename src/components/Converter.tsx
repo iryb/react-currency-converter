@@ -23,7 +23,7 @@ export const Converter = () => {
     CurrenciesList[1].value
   );
   const [firstAmount, setFirstAmount] = useState<number>(1);
-  const [secondAmount, setSecondAmount] = useState<number>();
+  const [secondAmount, setSecondAmount] = useState<number>(0);
   const [rate, setRate] = useState<number>();
   const [error, setError] = useState(null);
 

@@ -1,5 +1,6 @@
 import { CurrenciesListItem, Currency } from "@/types/types";
 
+export const API = "https://v6.exchangerate-api.com";
 export const HeaderBaseCurrency: Currency = "UAH";
 export const HeaderCurrencies: Currency[] = ["EUR", "USD"];
 export const CurrenciesList: CurrenciesListItem[] = [

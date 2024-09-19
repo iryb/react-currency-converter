@@ -1,3 +1,4 @@
+import { API } from "../constants/constants";
 import { Currency } from "../types/types";
 
 export const fetchRates = async ({
@@ -8,7 +9,7 @@ export const fetchRates = async ({
   currencies: Currency[];
 }) => {
   return fetch(
-    `/v6/${process.env.REACT_APP_CURRENCY_API}/latest/${baseCurrency}`
+    `${API}/v6/${process.env.REACT_APP_CURRENCY_API}/latest/${baseCurrency}`
   )
     .then((res) => res.json())
     .then(
@@ -38,7 +39,7 @@ export const getConversionRate = async ({
   targetCurrency: Currency;
 }) => {
   return fetch(
-    `/v6/${process.env.REACT_APP_CURRENCY_API}/pair/${baseCurrency}/${targetCurrency}`
+    `${API}/v6/${process.env.REACT_APP_CURRENCY_API}/pair/${baseCurrency}/${targetCurrency}`
   )
     .then((res) => res.json())
     .then(

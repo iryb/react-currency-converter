@@ -18,6 +18,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/Popover";
 type ComboboxItem = {
   value: string;
   label: string;
+  icon: string;
 };
 
 type ComboboxProps = ComboboxItem[];
@@ -32,7 +33,6 @@ export function Combobox({
   setSelectedValue: (value: string) => void;
 }) {
   const [open, setOpen] = React.useState(false);
-  //  const [value, setValue] = React.useState(selectedValue);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -43,9 +43,18 @@ export function Combobox({
           aria-expanded={open}
           className="w-[200px] justify-between"
         >
-          {selectedValue
-            ? items.find((item) => item.value === selectedValue)?.label
-            : "Select currency..."}
+          {selectedValue ? (
+            <>
+              <img
+                src={items.find((item) => item.value === selectedValue)?.icon}
+                alt="flag"
+                className="w-8"
+              />
+              {items.find((item) => item.value === selectedValue)?.label}
+            </>
+          ) : (
+            "Select currency..."
+          )}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -72,6 +81,7 @@ export function Combobox({
                       selectedValue === item.value ? "opacity-100" : "opacity-0"
                     )}
                   />
+                  <img src={item.icon} alt={item.label} className="w-8 mr-2" />
                   {item.label}
                 </CommandItem>
               ))}

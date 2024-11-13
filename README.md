@@ -1,6 +1,14 @@
 # Currency converter
 
-This app allows you to see current exchange rate.
+This app allows you to see the current exchange rate. Available currencies: UAH, USD, EUR. 
+
+![image](https://github.com/user-attachments/assets/1deab62c-37be-438f-b914-91e6afb0cb6a)
+
+## Tech stack
+- React
+- Typescript
+- Tailwind CSS
+- React Testing Library
 
 ## How to run the project
 
@@ -34,9 +42,3 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
